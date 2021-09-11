@@ -2,6 +2,9 @@ package com.impacta.microservices.contacorrente.controller;
 
 import com.impacta.microservices.contacorrente.domain.SaldoExtrato;
 import com.impacta.microservices.contacorrente.service.SaldoExtratoService;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+@Tag(name="Conta corrente endpoint")
 @RestController
 @RequestMapping(("/saldoextrato"))
 public class SaldoExtratoController {
