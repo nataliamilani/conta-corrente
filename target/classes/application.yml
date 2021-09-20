@@ -29,4 +29,4 @@ spring:
       data-locations: classpath:data.sql
 
 clients:
-  credito: "http://localhost:8081/credito"
+  credito: '${CREDITO_URL:http://localhost:8081/credito}'
