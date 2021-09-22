@@ -30,3 +30,4 @@ spring:
 
 clients:
   credito: '${CREDITO_URL:http://localhost:8081/credito}'
+  debito: '${DEBITO_URL:http://localhost:8082/debito}'
