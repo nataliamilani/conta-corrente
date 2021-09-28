@@ -24,11 +24,17 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
         ddl-auto: update
-        show-sql: true
+      show-sql: true
   sql:
     init:
       mode: always
       data-locations: classpath:data.sql
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health, metrics, prometheus
 
 clients:
   credito: '${CREDITO_URL:http://localhost:8081/credito}'
