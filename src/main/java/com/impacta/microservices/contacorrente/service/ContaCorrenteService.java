@@ -3,6 +3,7 @@ package com.impacta.microservices.contacorrente.service;
 import com.impacta.microservices.contacorrente.client.CreditoClient;
 import com.impacta.microservices.contacorrente.client.DebitoClient;
 import com.impacta.microservices.contacorrente.domain.ContaCorrente;
+import com.impacta.microservices.contacorrente.exceptions.ContaIdExistenteBadRequestException;
 import com.impacta.microservices.contacorrente.exceptions.ContaIdNotFoundException;
 import com.impacta.microservices.contacorrente.repository.ContaCorrenteRepository;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,12 @@ public class ContaCorrenteService {
     }
 
     public ContaCorrente criarContaCorrente(ContaCorrente contaCorrente) {
+
+        var contaExistente = repository.findByContaId(contaCorrente.getContaId()).isPresent();
+
+        if(contaExistente) {
+            throw new ContaIdExistenteBadRequestException("ContaId " + contaCorrente.getContaId() + " já existe");
+        }
         return repository.save(contaCorrente);
     }
 

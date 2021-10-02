@@ -3,6 +3,7 @@ package com.impacta.microservices.contacorrente.service;
 import com.impacta.microservices.contacorrente.client.CreditoClient;
 import com.impacta.microservices.contacorrente.client.DebitoClient;
 import com.impacta.microservices.contacorrente.domain.ContaCorrente;
+import com.impacta.microservices.contacorrente.exceptions.ContaIdExistenteBadRequestException;
 import com.impacta.microservices.contacorrente.exceptions.ContaIdNotFoundException;
 import com.impacta.microservices.contacorrente.repository.ContaCorrenteRepository;
 import org.junit.Before;
@@ -21,7 +22,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest(webEnvironment = NONE)
-class ContaCorrenteServiceTest {
+public class ContaCorrenteServiceTest {
 
     @InjectMocks
     private ContaCorrenteService contaCorrenteService;
@@ -55,6 +56,12 @@ class ContaCorrenteServiceTest {
         assertEquals(contaId, result.getContaId());
         assertEquals(clienteId, result.getClienteId());
     }
+
+//    @Test(expected = ContaIdExistenteBadRequestException.class)
+//    public void RetornarContaIdExistenteBadRequestExceptionQuandoContaIdJaExistir() {
+//        final ContaCorrente contaCorrente = new ContaCorrente(1,1,1,0.0);
+//        when(contaCorrenteService.criarContaCorrente(contaCorrente)).thenThrow(ContaIdExistenteBadRequestException.class);
+//    }
 
 //    @Test
 //    public void buscarContaCorrente(){
