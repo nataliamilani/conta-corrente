@@ -16,7 +16,7 @@ spring:
     name: conta-corrente
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: '${DATABASE_CONNECTION_URL:jdbc:mysql://localhost:3306/contacorrentedb}'
+    url: '${DATABASE_CONNECTION_URL:jdbc:mysql://localhost:3304/contacorrentedb}'
     username: mysql
     password: mysql
   jpa:
