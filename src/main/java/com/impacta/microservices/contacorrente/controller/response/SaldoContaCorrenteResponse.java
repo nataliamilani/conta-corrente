@@ -1,12 +1,14 @@
 package com.impacta.microservices.contacorrente.controller.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SaldoContaCorrenteResponse {
 
     private Double saldoContaCorrente;
 
-    public SaldoContaCorrenteResponse(@JsonProperty("saldo_contacorrente") Double saldo){
+    @JsonCreator
+    public SaldoContaCorrenteResponse(@JsonProperty("saldo_conta_corrente") Double saldo){
         this.saldoContaCorrente = saldo;
     }
 
