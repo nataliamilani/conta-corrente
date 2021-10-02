@@ -2,8 +2,9 @@ package com.impacta.microservices.contacorrente.service;
 
 import com.impacta.microservices.contacorrente.client.CreditoClient;
 import com.impacta.microservices.contacorrente.client.DebitoClient;
+import com.impacta.microservices.contacorrente.client.response.SaldoCredito;
+import com.impacta.microservices.contacorrente.client.response.SaldoDebito;
 import com.impacta.microservices.contacorrente.domain.ContaCorrente;
-import com.impacta.microservices.contacorrente.exceptions.ContaIdNotFoundException;
 import com.impacta.microservices.contacorrente.repository.ContaCorrenteRepository;
 import org.springframework.stereotype.Component;
 
@@ -28,25 +29,34 @@ public class ContaCorrenteService {
     }
 
     public ContaCorrente buscarContaCorrente(Integer contaId) {
-        atualizarSaldoContaCorrente(contaId);
 
-        if(repository.findByContaId(contaId).isPresent()) {
-            return repository.findByContaId(contaId).get();
-        }
-            return  null;
+        atualizaSaldo(contaId);
+        return repository.findByContaId(contaId);
     }
 
-    public ContaCorrente atualizarSaldoContaCorrente(Integer contaId) {
-            var contaCorrente = repository.findByContaId(contaId)
-                    .orElseThrow(() -> new ContaIdNotFoundException("Não encontrada conta id: " + contaId));
+    public Double consultaSaldoContaCorrente(Integer contaId) {
 
-            var debito = debitoClient.getSaldoDebitoConta(contaId);
-            var credito = creditoClient.getSaldoCreditoConta(contaId);
+        //recupera valor total de credito da conta corrente
+        SaldoCredito saldoCred = creditoClient.getSaldoCreditoConta(contaId);
+        var saldoCredito = saldoCred.getValorCredito();
 
-            double saldoTotalConta = credito.getValorCredito() - debito.getValorDebito();
+        //recupera valor total de debito da conta corrente
+        SaldoDebito saldoDeb = debitoClient.getSaldoDebitoConta(contaId);
+        var saldoDebito = saldoDeb.getSaldoDebito();
 
-            contaCorrente.setSaldo(saldoTotalConta);
+        //realiza abatimento do total de credito pelo debito para obter o valor atual do saldo
+        var saldoTotal = saldoCredito - saldoDebito;
 
-            return repository.save(contaCorrente);
+        return saldoTotal;
     }
+
+    public void atualizaSaldo(Integer contaId){
+
+        //Atualiza tabela de conta corrente com o saldo obtido
+        var contacorrente = repository.findByContaId(contaId);
+        contacorrente.setSaldo(consultaSaldoContaCorrente(contaId));
+        repository.save(contacorrente);
+
+    }
+
 }
