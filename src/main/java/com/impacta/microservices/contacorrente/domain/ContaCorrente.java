@@ -10,21 +10,16 @@ import java.io.Serializable;
 @Table(name = "contacorrente")
 public class ContaCorrente implements Serializable {
 
-    //private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cc")
     private Integer id_cc;
 
-   // @Transient
-   // private String porta;
-
     @Column(name = "conta_id")
     private Integer contaId;
 
     @Column(name = "saldo")
-    private Double saldo;
+    private double saldo;
 
     @Column(name = "cliente_id")
     private Integer clienteId;
@@ -36,7 +31,7 @@ public class ContaCorrente implements Serializable {
     public ContaCorrente(@JsonProperty("id_cc") Integer id_cc,
                          @JsonProperty("conta_id") Integer contaId,
                          @JsonProperty("cliente_id") Integer clienteId,
-                         @JsonProperty("saldo") Double saldo) {
+                         @JsonProperty("saldo") double saldo) {
         this.id_cc = id_cc;
         this.contaId = contaId;
         this.clienteId = clienteId;
@@ -59,11 +54,11 @@ public class ContaCorrente implements Serializable {
         this.contaId = contaId;
     }
 
-    public Double getSaldo() {
+    public double getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(Double saldo) {
+    public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
 
