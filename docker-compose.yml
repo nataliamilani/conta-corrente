@@ -20,12 +20,12 @@ services:
       - debito:debito
       - prometheus:prometheus
     depends_on:
-      - db
+      - dbcontacorrente
     links:
-      - db
+      - dbcontacorrente
     restart: on-failure
 
-  db:
+  dbcontacorrente:
     image: mysql
     container_name: dbcontacorrente
     hostname: dbcontacorrente
